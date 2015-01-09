@@ -13,10 +13,8 @@ class BlanksFinder
     blanks = []
     input.each_with_index do |num, index|
       if num == 0
-        num = Spot.new
-        blanks << index
+        num = Spot.new(index)
       end
     end
-    blanks
   end
 end

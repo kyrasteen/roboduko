@@ -21,6 +21,6 @@ class NumberFinderTest < Minitest::Test
     assert_equal [2,5,8], answer
   end
 
-  def 
+  def
 
 end
