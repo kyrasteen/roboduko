@@ -3,10 +3,11 @@ require_relative 'board'
 
 class Runner
 
-  attr_reader :board
+  attr_reader :board, :status
 
   def initialize
     @board = Board.new
+    @status = :unsolved
   end
 
 #upon loading immediatly sets up grid (arrays)
@@ -22,16 +23,37 @@ class Runner
   end
 
   def run
-    board.create_spots
+    self.load_file
+    board.spot_maker
     #look for blanks and fill with spots
+
     until status == :solved
+      #go through entire grid
+      #find spots
       #evaluate possibilites, fill spots you can
       #loop
+      puts 'in run loop'
+      spots_present = board.grid.select do |row|
+        row.select do |num|
+          num.is_a?(Spot)
+        end
+      end
 
+      if spots_present.length == 0
+        status = :solved
+      else
+        board.grid.each do |row|
+          row.each do |num|
+            if num.is_a?(Spot)
+              board.chunk_check(spot)
+            end
+          end
+        end
+      end
     end
   end
 
 end
 
 runner = Runner.new
-runner.load_file
+runner.run
