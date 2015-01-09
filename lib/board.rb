@@ -1,5 +1,6 @@
 require_relative 'spot'
 require_relative 'square'
+require 'pry'
 
 class Board
 
@@ -39,10 +40,28 @@ class Board
     grid.each { |row| column << row[column_number] }
     column
   end
+#Spot object is a string in array
+  def spots_filled?
+    spots_present = []
+    grid.each do |row|
+      row.each do |entry|
+        if entry.is_a?(String)
+          spots_present << entry
+        end
+      end
+    end
+
+    if spots_present.length == 0
+      true
+    else
+      false
+    end
+  end
 
   def evaluator(spot, chunk)
     if spot.candidates.length == 1
-      spot = spot.candidates[0]
+      #spot not becoming a number
+      grid[spot.coordinates[0]][spot.coordinates[1]] = spot.candidates[0]
     end
     spot.candidates = spot.candidates.reject {|x| chunk.include?(x)}
   end

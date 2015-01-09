@@ -33,26 +33,22 @@ class Runner
       #evaluate possibilites, fill spots you can
       #loop
       puts 'in run loop'
-      spots_present = board.grid.select do |row|
-        row.select do |num|
-          num.is_a?(Spot)
-        end
-      end
-
-      if spots_present.length == 0
+#spot object is a string in array
+      if board.spots_filled?
+        puts "Board is complete!"
+        puts board.grid
         status = :solved
       else
         board.grid.each do |row|
-          row.each do |num|
-            if num.is_a?(Spot)
-              board.chunk_check(spot)
+          row.each do |entry|
+            if entry.is_a?(String)
+              board.chunk_check(entry)
             end
           end
         end
       end
     end
   end
-
 end
 
 runner = Runner.new
