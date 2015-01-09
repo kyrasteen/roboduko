@@ -40,5 +40,15 @@ class BoardTest < Minitest::Test
     assert_equal [7,7,7,7,7,7,7,7,7], @board.column_maker(3)
   end
 
+  def test_are_spots_filled?
+    @board.grid = [[1,2,3,7,4,9,5,8,6],[9,8,7,6,5,4,3,2,1],[9,8,7,6,5,4,3,2,1]]
+    assert @board.spots_filled?
+  end
+
+  def test_spots_are_not_filled?
+    @board.grid = [[1, '#<Spot:0xXXXXXX @coordinates=[0, 1], @square=1>',3,7,4,9,5,8],[9,8,7,6,5,4,3,2,1]]
+    refute @board.spots_filled?
+  end
+
 
 end
