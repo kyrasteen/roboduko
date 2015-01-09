@@ -21,20 +21,24 @@ class BoardTest < Minitest::Test
   def test_it_inserts_one_spot_object_into_empty_space
     board = Board.new
     board.grid = [[1,0,3,7,4,9,5,8],[9,8,7,6,5,4,3,2,1]]
-    assert_equal [[1, '#<Spot:0xXXXXXX @coordinates=[0, 1], @square=1>',3,7,4,9,5,8],[9,8,7,6,5,4,3,2,1]], board.create_spots
+    assert_equal [[1, '#<Spot:0xXXXXXX @coordinates=[0, 1], @square=1>',3,7,4,9,5,8],[9,8,7,6,5,4,3,2,1]], board.spot_maker
   end
 ###why does this only pass when tested twice?
   def test_it_inserts_spot_objects_into_empty_spaces
     board = Board.new
     board.grid = [[1,0,3,7,4,9,5,8],[9,8,7,6,0,4,3,2,1]]
-    assert_equal [[1, '#<Spot:0xXXXXXX @coordinates=[0, 1], @square=1>',3,7,4,9,5,8],[9,8,7,6,'#<Spot:0xXXXXXX @coordinates=[1, 4], @square=2>',4,3,2,1]], board.create_spots
+    assert_equal [[1, '#<Spot:0xXXXXXX @coordinates=[0, 1], @square=1>',3,7,4,9,5,8],[9,8,7,6,'#<Spot:0xXXXXXX @coordinates=[1, 4], @square=2>',4,3,2,1]], board.spot_maker
   end
 
-  def test_it_finds_a_square
-    coordinate = [2,7]
-    assert 3, @board.square_finder(coordinate)
+  def test_it_makes_a_square
+    @board.grid = [[1,2,3,7,4,9,5,8,6],[9,8,7,6,5,4,3,2,1],[9,8,7,6,5,4,3,2,1]]
+    assert_equal [1,2,3,9,8,7,9,8,7], @board.square_maker(1)
   end
 
+  def test_it_makes_a_column
+    @board.grid = [[1,2,3,7,4,9,5,8,6],[1,2,3,7,4,9,5,8,6],[1,2,3,7,4,9,5,8,6],[1,2,3,7,4,9,5,8,6],[1,2,3,7,4,9,5,8,6],[1,2,3,7,4,9,5,8,6],[1,2,3,7,4,9,5,8,6],[1,2,3,7,4,9,5,8,6],[1,2,3,7,4,9,5,8,6]]
+    assert_equal [7,7,7,7,7,7,7,7,7], @board.column_maker(3)
+  end
 
 
 end
