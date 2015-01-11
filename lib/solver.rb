@@ -15,6 +15,7 @@ class Solver
     filename = ARGV.first
       File.readlines(filename).each do |line|
         game_row = line.delete("\n").split("")
+        game_row.push(0) until game_row.length == 9
         game_row.each_with_index do |number_string, index|
           game_row[index] = number_string.to_i
         end
@@ -25,23 +26,18 @@ class Solver
   def solve
     self.load_file
     board.spot_maker
-    #look for blanks and fill with spots
 
     until status == :solved
-      #go through entire grid
-      #find spots
-      #evaluate possibilites, fill spots you can
-      #loop
-      puts 'in run loop'
-#spot object is a string in array
+
       if board.spots_filled?
         puts "Board is complete!"
-        puts board.grid
-        status = :solved
+        lines = @board.grid.map { |row| row.join }
+        puts lines.join("\n")
+        @status = :solved
       else
         board.grid.each do |row|
           row.each do |entry|
-            if entry.is_a?(String)
+            if !entry.is_a?(Integer)
               board.chunk_check(entry)
             end
           end

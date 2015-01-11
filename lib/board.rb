@@ -19,6 +19,7 @@ class Board
         end
       end
     end
+    grid
   end
 
   def square_maker(square_number)
@@ -45,7 +46,7 @@ class Board
     spots_present = []
     grid.each do |row|
       row.each do |entry|
-        if entry.is_a?(String)
+        if !entry.is_a?(Integer)
           spots_present << entry
         end
       end
@@ -61,9 +62,11 @@ class Board
   def evaluator(spot, chunk)
     if spot.candidates.length == 1
       #spot not becoming a number
-      grid[spot.coordinates[0]][spot.coordinates[1]] = spot.candidates[0]
+      @grid[spot.coordinates[0]][spot.coordinates[1]] = spot.candidates[0]
+    else
+      #changed from if end statement
+      spot.candidates = spot.candidates.reject {|x| chunk.include?(x)}
     end
-    spot.candidates = spot.candidates.reject {|x| chunk.include?(x)}
   end
 
   def chunk_check(spot)
